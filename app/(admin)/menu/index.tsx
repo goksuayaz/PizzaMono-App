@@ -1,4 +1,4 @@
-import { View, FlatList, Text } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import ProductListItem from '@components/ProductListItem';
 import { useProductList } from '@/api/products';
 import { ActivityIndicator } from 'react-native';

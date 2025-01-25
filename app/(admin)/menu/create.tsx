@@ -71,7 +71,7 @@ const CreateProductScreen = () => {
     }
 
 
-    const onCreate = () => {
+    const onCreate = async () => {
         if (!validateInput()) {
             return;
         }
@@ -87,7 +87,7 @@ const CreateProductScreen = () => {
         })
     }
 
-    const onUpdate = () => {
+    const onUpdate = async () => {
         if (!validateInput()) {
             return;
         }
