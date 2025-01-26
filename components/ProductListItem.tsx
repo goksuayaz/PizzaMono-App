@@ -1,13 +1,13 @@
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 import Colors from '@/constants/Colors';
-import { Product } from '@/types';
 import { Link, useSegments } from 'expo-router';
+import { Tables } from '@/database.types';
 
 export const defaultPizzaImage =
     'https://www.shutterstock.com/shutterstock/photos/1522610525/display_1500/stock-vector-italian-round-pizza-on-wooden-table-icon-over-white-background-vector-illustration-1522610525.jpg'
 
 type ProductListItemProps = {
-    product: Product;
+    product: Tables<'products'>;
 
 }
 
