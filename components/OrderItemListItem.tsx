@@ -2,10 +2,10 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import React from 'react';
 import Colors from '../constants/Colors';
 import { defaultPizzaImage } from './ProductListItem';
-import { OrderItem } from '@/types';
+import { Tables } from '@/database.types';
 
 type OrderItemListItemProps = {
-    item: OrderItem;
+    item: { products: Tables<'products'> } & Tables<'order_items'>;
 };
 
 const OrderItemListItem = ({ item }: OrderItemListItemProps) => {

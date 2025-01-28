@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/AuthProvider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
+import { InsertTables } from "@/types";
 
 export const useAdminOrderList = ({ archived = false }) => {
     const statuses = archived ? ['Delivered'] : ['New', 'Cooking', 'Delivering'];
@@ -9,7 +9,7 @@ export const useAdminOrderList = ({ archived = false }) => {
     return useQuery({
         queryKey: ['orders', { archived }],
         queryFn: async () => {
-            const { data, error } = await supabase.from('orders').select('*').in('status', statuses);
+            const { data, error } = await supabase.from('orders').select('*').in('status', statuses).order('created_at', { ascending: false });
             if (error) {
                 throw new Error(error.message);
             }
@@ -31,7 +31,7 @@ export const useMyOrderList = () => {
                 return null
             }
 
-            const { data, error } = await supabase.from('orders').select('*').eq('user_id', id);
+            const { data, error } = await supabase.from('orders').select('*').eq('user_id', id).order('created_at', { ascending: false });
             if (error) {
                 throw new Error(error.message);
             }
@@ -45,7 +45,7 @@ export const useOrderDetails = (id: number) => {
     return useQuery({
         queryKey: ['orders', id],
         queryFn: async () => {
-            const { data, error } = await supabase.from('orders').select('*').eq('id', id).single();
+            const { data, error } = await supabase.from('orders').select('*, order_items(*, products(*))').eq('id', id).single();
             if (error) {
                 throw new Error(error.message);
 
@@ -77,7 +77,7 @@ export const useInsertOrder = () => {
         },
 
         async onSuccess() {
-            await queryClient.invalidateQueries(['products']);
+            await queryClient.invalidateQueries(['orders']);
         },
     });
 };
