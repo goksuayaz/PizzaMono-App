@@ -5,7 +5,7 @@ import Colors from "@/constants/Colors";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, FlatList, Pressable, Text, View } from "react-native";
 import { OrderStatusList } from "@/types";
-import { useOrderDetails } from "@/api/orders";
+import { useOrderDetails, useUpdateOrder } from "@/api/orders";
 
 export default function OrderDetailsScreen() {
 
@@ -13,7 +13,11 @@ export default function OrderDetailsScreen() {
     const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
     const { data: order, isLoading, error } = useOrderDetails(id);
+    const { mutate: updateOrder } = useUpdateOrder();
+    const updateStatus = (status) => {
+        updateOrder({ id: id, updatedFields: { status } });
 
+    }
 
     if (isLoading) {
         return <ActivityIndicator />
@@ -37,7 +41,7 @@ export default function OrderDetailsScreen() {
                             {OrderStatusList.map((status) => (
                                 <Pressable
                                     key={status}
-                                    onPress={() => console.warn('Update status')}
+                                    onPress={() => updateStatus(status)}
                                     style={{
                                         borderColor: Colors.light.tint,
                                         borderWidth: 1,

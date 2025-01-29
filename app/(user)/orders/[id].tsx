@@ -1,5 +1,4 @@
-import { useOrderDetails } from "@/api/orders";
-import orders from "@/assets/data/orders";
+import { useOrderDetails, useUpdateOrder } from "@/api/orders";
 import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItem from "@/components/OrderListItem";
 import { Stack, useLocalSearchParams } from "expo-router";
